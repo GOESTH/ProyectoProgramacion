@@ -14,9 +14,9 @@ pinMode(10, OUTPUT); // Pin 10 se conecta a al pin IN3 de la placa del motor pas
 pinMode(9, OUTPUT); // Pin 9 se conecta a al pin IN2 de la placa del motor paso a paso.
 pinMode(8, OUTPUT); // Pin 8 se conecta a al pin IN1 de la placa del motor paso a paso.
 
-adat.attach(6);//el servo adat se ubica en el pin digital(pwm)9.
-arab.attach(5);//el servo arab se ubica en el pin digital(pwm)10.
-gar.attach(3);//el servo gar se ubica en el pin digital(pwm)11.
+adat.attach(6);//el servo 1 adat se ubica en el pin digital(pwm)9.
+arab.attach(5);//el servo 2 arab se ubica en el pin digital(pwm)10.
+gar.attach(3);//el servo  3 gar se ubica en el pin digital(pwm)11.
 
 adat.write(24);
 arab.write(77);
@@ -36,8 +36,6 @@ Serial.println("  POSICION e, EL BRAZO SE MUEVE SEGUN EL JOYSTICK");
 Serial.println("  -----------------POR DEFECTO SE INICIA EN LA POSICION A--------------");
 
 
-
-
 }
 
 void loop() {
@@ -51,26 +49,74 @@ if(Serial.available()>=1)
    Serial.print("ud indico posicion:");
    Serial.println(cmd);
      
- if(cmd == 'a'|| cmd == 'A')
- {
-  adat.write(27);
-  arab.write(77);
-  gar.write(0);
+ if(cmd == 'a'|| cmd == 'A'){
+  
+  adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
+  arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
+  gar.write(0);//se escribe el numero de grados que se va a mover el servo 3.
 
 
- }else if(cmd == 'b'|| cmd == 'B') 
-{
+ }else if(cmd == 'b'|| cmd == 'B'){
+  
   adat.write(76);
   arab.write(77);
   gar.write(0);
   
 }
  }
+  }
 
-  
-
-
-
-  
-
+void paso_der(){         // funcion_movimiento hacia la derecha del motor paso a paso.
+ digitalWrite(11, LOW); 
+ digitalWrite(10, LOW);  
+ digitalWrite(9, HIGH);  
+ digitalWrite(8, HIGH);  
+   delay(retardo); 
+ digitalWrite(11, LOW); 
+ digitalWrite(10, HIGH);  
+ digitalWrite(9, HIGH);  
+ digitalWrite(8, LOW);  
+   delay(retardo); 
+ digitalWrite(11, HIGH); 
+ digitalWrite(10, HIGH);  
+ digitalWrite(9, LOW);  
+ digitalWrite(8, LOW);  
+  delay(retardo); 
+ digitalWrite(11, HIGH); 
+ digitalWrite(10, LOW);  
+ digitalWrite(9, LOW);  
+ digitalWrite(8, HIGH);  
+  delay(retardo);  
 }
+
+void paso_izq() {        //funcion_movimiento hacia la izquierda del motor paso a paso.
+ digitalWrite(11, HIGH); 
+ digitalWrite(10, HIGH);  
+ digitalWrite(9, LOW);  
+ digitalWrite(8, LOW);  
+  delay(retardo); 
+ digitalWrite(11, LOW); 
+ digitalWrite(10, HIGH);  
+ digitalWrite(9, HIGH);  
+ digitalWrite(8, LOW);  
+  delay(retardo); 
+ digitalWrite(11, LOW); 
+ digitalWrite(10, LOW);  
+ digitalWrite(9, HIGH);  
+ digitalWrite(8, HIGH);  
+  delay(retardo); 
+ digitalWrite(11, HIGH); 
+ digitalWrite(10, LOW);  
+ digitalWrite(9, LOW);  
+ digitalWrite(8, HIGH);  
+  delay(retardo); 
+}
+        
+void apagado() {         // funcion_apagado del motor paso a paso.
+ digitalWrite(11, LOW); 
+ digitalWrite(10, LOW);  
+ digitalWrite(9, LOW);  
+ digitalWrite(8, LOW);  
+ }
+
+  
