@@ -3,6 +3,9 @@
 Servo adat; //adelante y atras.
 Servo arab;//arriba y abajo.
 Servo gar;//garra.
+int velmo = 5;// Tiempo (milisegundos) en da un paso el motor.
+int dato_rx = 0;// valor recibido en grados
+int numero_pasos = 0;// Valor en grados donde se encuentra el motor
 
 
 void setup() {
@@ -19,7 +22,7 @@ arab.attach(5);//el servo 2 arab se ubica en el pin digital(pwm)10.
 gar.attach(3);//el servo  3 gar se ubica en el pin digital(pwm)11.
 
 adat.write(24);
-arab.write(77);
+arab.write(85);
 gar.write(0);
 
 Serial.println("    -SERVO 1, MUEVE LA GARRA ADELANTE Y ATRAS");
@@ -46,21 +49,92 @@ if(Serial.available()>=1)
     
    char cmd;//varible char para guardar un caracter
    cmd = Serial.read();//lee un caracter, que es el comando para saber en que poscicion se ubica el brazo
-   Serial.print("ud indico posicion:");
-   Serial.println(cmd);
+  
      
  if(cmd == 'a'|| cmd == 'A'){
   
+   Serial.print("ud indico posicion:");
+   Serial.println(cmd);
+   
   adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
   arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
   gar.write(0);//se escribe el numero de grados que se va a mover el servo 3.
+  dato_rx =0;
+  dato_rx = (dato_rx * 1.4222222222);
+
+  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+       paso_izq();
+       numero_pasos = numero_pasos + 1;
+   }
+   
+  while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+        paso_der();
+        numero_pasos = numero_pasos -1;
+   }
 
 
  }else if(cmd == 'b'|| cmd == 'B'){
+
+   Serial.print("ud indico posicion:");
+   Serial.println(cmd);
+   
+  adat.write(50);
+  arab.write(90);
+  gar.write(0);
+
+    dato_rx =90;
+  dato_rx = (dato_rx * 1.4222222222);
+
+  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+       paso_izq();
+       numero_pasos = numero_pasos + 1;
+   }
+   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+        paso_der();
+        numero_pasos = numero_pasos -1;
+   }
   
-  adat.write(76);
+}else if(cmd == 'c'|| cmd == 'C'){
+
+   Serial.print("ud indico posicion:");
+   Serial.println(cmd);
+   
+  adat.write(70);
+  arab.write(110);
+  gar.write(0);
+
+    dato_rx =180;
+  dato_rx = (dato_rx * 1.4222222222);
+
+  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+       paso_izq();
+       numero_pasos = numero_pasos + 1;
+   }
+   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+        paso_der();
+        numero_pasos = numero_pasos -1;
+   }
+  
+}else if(cmd == 'd'|| cmd == 'D'){
+
+   Serial.print("ud indico posicion:");
+   Serial.println(cmd);
+   
+  adat.write(90);
   arab.write(77);
   gar.write(0);
+
+    dato_rx = 270;
+  dato_rx = (dato_rx * 1.4222222222);
+
+  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+       paso_izq();
+       numero_pasos = numero_pasos + 1;
+   }
+   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+        paso_der();
+        numero_pasos = numero_pasos -1;
+   }
   
 }
  }
@@ -71,22 +145,22 @@ void paso_der(){         // funcion_movimiento hacia la derecha del motor paso a
  digitalWrite(10, LOW);  
  digitalWrite(9, HIGH);  
  digitalWrite(8, HIGH);  
-   delay(retardo); 
+   delay(velmo); 
  digitalWrite(11, LOW); 
  digitalWrite(10, HIGH);  
  digitalWrite(9, HIGH);  
  digitalWrite(8, LOW);  
-   delay(retardo); 
- digitalWrite(11, HIGH); 
+   delay(velmo); 
+   digitalWrite(11, HIGH); 
  digitalWrite(10, HIGH);  
  digitalWrite(9, LOW);  
  digitalWrite(8, LOW);  
-  delay(retardo); 
+     delay(velmo);  
  digitalWrite(11, HIGH); 
  digitalWrite(10, LOW);  
  digitalWrite(9, LOW);  
  digitalWrite(8, HIGH);  
-  delay(retardo);  
+     delay(velmo);   
 }
 
 void paso_izq() {        //funcion_movimiento hacia la izquierda del motor paso a paso.
@@ -94,22 +168,22 @@ void paso_izq() {        //funcion_movimiento hacia la izquierda del motor paso 
  digitalWrite(10, HIGH);  
  digitalWrite(9, LOW);  
  digitalWrite(8, LOW);  
-  delay(retardo); 
+     delay(velmo);  
  digitalWrite(11, LOW); 
  digitalWrite(10, HIGH);  
  digitalWrite(9, HIGH);  
  digitalWrite(8, LOW);  
-  delay(retardo); 
+     delay(velmo);  
  digitalWrite(11, LOW); 
  digitalWrite(10, LOW);  
  digitalWrite(9, HIGH);  
  digitalWrite(8, HIGH);  
-  delay(retardo); 
+     delay(velmo);  
  digitalWrite(11, HIGH); 
  digitalWrite(10, LOW);  
  digitalWrite(9, LOW);  
  digitalWrite(8, HIGH);  
-  delay(retardo); 
+     delay(velmo); 
 }
         
 void apagado() {         // funcion_apagado del motor paso a paso.
