@@ -59,6 +59,7 @@ if(Serial.available()>=1)
   adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
   arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
   gar.write(0);//se escribe el numero de grados que se va a mover el servo 3.
+  
   anges =0;
   anges = (anges * 1.4222222222);
 
@@ -82,14 +83,14 @@ if(Serial.available()>=1)
   arab.write(90);
   gar.write(0);
 
-    anges =90;
+  anges =90;
   anges = (anges * 1.4222222222);
 
   while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
        posicion_motor = posicion_motor + 1;
    }
-   while (anges<posicion_motor){   // Giro hacia la derecha en grados
+  while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
         posicion_motor = posicion_motor -1;
    }
@@ -103,14 +104,14 @@ if(Serial.available()>=1)
   arab.write(110);
   gar.write(0);
 
-    anges =180;
+  anges =180;
   anges = (anges * 1.4222222222);
 
   while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
        posicion_motor = posicion_motor + 1;
    }
-   while (anges<posicion_motor){   // Giro hacia la derecha en grados
+  while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
         posicion_motor = posicion_motor -1;
    }
@@ -124,27 +125,65 @@ if(Serial.available()>=1)
   arab.write(77);
   gar.write(0);
 
-    anges = 270;
+  anges = 270;
   anges = (anges * 1.4222222222);
 
   while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
        posicion_motor = posicion_motor + 1;
    }
-   while (anges<posicion_motor){   // Giro hacia la derecha en grados
+  while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
         posicion_motor = posicion_motor -1;
    }
   
-}else{
+}else if(cmd == 'e'|| cmd == 'E'){
+ 
+   Serial.print("ud indico posicion:");
+   Serial.println(cmd);
+   Serial.print("PASO A MODO MANUAL, USE EL JOYSTICK.");
+
+   while(cmd == 'e'|| cmd == 'E'){
+    
+    int pot1 = analogRead(0);// Lee el valor del potenciometro 1 del joystick, este valor entra por el pin analogico 0 (valor desde 0 a 1023)
+    pot1 = map(pot1, 0, 1023, 0, 180);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro de cada servo motor.
+    int pot2 = analogRead(1);// Lee el valor del potenciometro 1 del joystick, este valor entra por el pin analogico 1 (valor desde 0 a 1023)
+    pot2 = map(pot2, 0, 1023, 0, 180);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro de cada servo motor.
+    int pot3 = analogRead(2);// Lee el valor del potenciometro 1 del joystick, este valor entra por el pin analogico 0 (valor desde 0 a 1023)
+    pot3 = map(pot3, 0, 1023, 0, 359);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro del motor paso a paso.
+    
+  adat.write(pot1);//se manda la orden al servo motor 1 para que se mueva segun el joystick.
+  arab.write(pot2);//se manda la orden al servo motor 1 para que se mueva segun el joystick.
+  gar.write(0);
+
+    anges = pot3;
+    anges = (anges * 1.4222222222);
+
+  while (anges>posicion_motor){   // Girohacia la izquierda en grados
+       paso_izq();
+       posicion_motor = posicion_motor + 1;
+   }
+  while (anges<posicion_motor){   // Giro hacia la derecha en grados
+        paso_der();
+        posicion_motor = posicion_motor -1;
+   }
+   if( pot3>160){
+    cmd = 'a';
+   }
+
+   delay(15);
+   
+   }
+   }else{
 
  Serial.println("Ingresaste una letra que no representa ninguna pocision disponible ");
-}
+ 
 }
  }
+  }
   
 
-void paso_der(){         // funcion_movimiento hacia la derecha del motor paso a paso.
+void paso_der(){// funcion_movimiento hacia la derecha del motor paso a paso.
  digitalWrite(11, LOW); 
  digitalWrite(10, LOW);  
  digitalWrite(9, HIGH);  
@@ -167,7 +206,7 @@ void paso_der(){         // funcion_movimiento hacia la derecha del motor paso a
      delay(velmo);   
 }
 
-void paso_izq() {        //funcion_movimiento hacia la izquierda del motor paso a paso.
+void paso_izq() {//funcion_movimiento hacia la izquierda del motor paso a paso.
  digitalWrite(11, HIGH); 
  digitalWrite(10, HIGH);  
  digitalWrite(9, LOW);  
@@ -190,7 +229,7 @@ void paso_izq() {        //funcion_movimiento hacia la izquierda del motor paso 
      delay(velmo); 
 }
         
-void apagado() {         // funcion_apagado del motor paso a paso.
+void apagado() {// funcion_apagado del motor paso a paso.
  digitalWrite(11, LOW); 
  digitalWrite(10, LOW);  
  digitalWrite(9, LOW);  
