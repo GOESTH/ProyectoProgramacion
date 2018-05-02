@@ -3,8 +3,8 @@
 Servo adat; //adelante y atras.
 Servo arab;//arriba y abajo.
 Servo gar;//garra.
-int velmo = 5;// Tiempo (milisegundos) en da un paso el motor.
-int anges = 0;// Angulo escogido por el caracter seleccionado
+int velmo = 5;// Tiempo (milisegundos)que tarda en dar un paso el motor paso a paso.
+int anges = 0;// Angulo escogido por el caracter seleccionado.
 int posicion_motor = 0;// grado en el que esta el motor paso a paso
 
 
@@ -17,9 +17,9 @@ pinMode(10, OUTPUT); // Pin 10 se conecta a al pin IN3 de la placa del motor pas
 pinMode(9, OUTPUT); // Pin 9 se conecta a al pin IN2 de la placa del motor paso a paso.
 pinMode(8, OUTPUT); // Pin 8 se conecta a al pin IN1 de la placa del motor paso a paso.
 
-adat.attach(6);//el servo 1 adat se ubica en el pin digital(pwm)9.
-arab.attach(5);//el servo 2 arab se ubica en el pin digital(pwm)10.
-gar.attach(3);//el servo  3 gar se ubica en el pin digital(pwm)11.
+adat.attach(6);//el servo 1, llamado "adat" se ubica en el pin digital(pwm)9.
+arab.attach(5);//el servo 2, llamado "arab" se ubica en el pin digital(pwm)10.
+gar.attach(3);//el servo  3, llamdo "gar" se ubica en el pin digital(pwm)11.
 
 adat.write(24);
 arab.write(85);
@@ -31,12 +31,12 @@ Serial.println("    -SERVO 2, ABRE Y CIERRA LA GARRA");
 Serial.println("    -ROTACION, HACE ROTAR EL BRAZO SOBRE SU PROPIO EJE 360°");
 Serial.println("-----------------------------------------------------------------------");
 Serial.println("..............PUEDE ESCOGER ENTRE 3 POSICIONES DEL BRAZO..............");
-Serial.println("  POSICION a, SERVO 1: 24°, SERVO 2: 77°, SERVO 3: 0°, ROTACION: 0°");
-Serial.println("  POSICION b, SERVO 1: 24°, SERVO 2: 112°, SERVO 3: 0°, ROTACION: 90°");
-Serial.println("  POSICION c, SERVO 1: 76°, SERVO 2: 112°, SERVO 3: 0°, ROTACION: 180°");
-Serial.println("  POSICION d, SERVO 1: 63°, SERVO 2: 68°, SERVO 3: 0°, ROTACION: 270°");
+Serial.println("  POSICION a, SERVO 1: 27°, SERVO 2: 77°, SERVO 3: 0°, ROTACION: 0°");
+Serial.println("  POSICION b, SERVO 1: 50°, SERVO 2: 90°, SERVO 3: 0°, ROTACION: 90°");
+Serial.println("  POSICION c, SERVO 1: 70°, SERVO 2: 110°, SERVO 3: 0°, ROTACION: 180°");
+Serial.println("  POSICION d, SERVO 1: 90°, SERVO 2: 77°, SERVO 3: 0°, ROTACION: 270°");
 Serial.println("  POSICION e, EL BRAZO SE MUEVE SEGUN EL JOYSTICK");
-Serial.println("  -----------------POR DEFECTO SE INICIA EN LA POSICION A--------------");
+Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 85°, SERVO 3: 0°, ROTACION: 0° !!! ");
 
 
 }
@@ -47,8 +47,8 @@ void loop() {
 if(Serial.available()>=1)
    {
     
-   char cmd;//varible char para guardar un caracter
-   cmd = Serial.read();//lee un caracter, que es el comando para saber en que poscicion se ubica el brazo
+   char cmd;//variable char para guardar un caracter
+   cmd = Serial.read();//lee un caracter, que es el comando para saber en que pocision se ubica el brazo
   
      
  if(cmd == 'a'|| cmd == 'A'){
@@ -62,7 +62,7 @@ if(Serial.available()>=1)
   anges =0;
   anges = (anges * 1.4222222222);
 
-  while (anges>posicion_motor){   // Girohacia la izquierda en grados
+  while (anges>posicion_motor){   // Giro hacia la izquierda en grados
        paso_izq();
        posicion_motor = posicion_motor + 1;
    }
@@ -136,9 +136,13 @@ if(Serial.available()>=1)
         posicion_motor = posicion_motor -1;
    }
   
+}else{
+
+ Serial.println("Ingresaste una letra que no representa ninguna pocision disponible ");
+}
 }
  }
-  }
+  
 
 void paso_der(){         // funcion_movimiento hacia la derecha del motor paso a paso.
  digitalWrite(11, LOW); 
