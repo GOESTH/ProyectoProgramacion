@@ -4,8 +4,8 @@ Servo adat; //adelante y atras.
 Servo arab;//arriba y abajo.
 Servo gar;//garra.
 int velmo = 5;// Tiempo (milisegundos) en da un paso el motor.
-int dato_rx = 0;// valor recibido en grados
-int numero_pasos = 0;// Valor en grados donde se encuentra el motor
+int anges = 0;// Angulo escogido por el caracter seleccionado
+int posicion_motor = 0;// grado en el que esta el motor paso a paso
 
 
 void setup() {
@@ -59,17 +59,17 @@ if(Serial.available()>=1)
   adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
   arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
   gar.write(0);//se escribe el numero de grados que se va a mover el servo 3.
-  dato_rx =0;
-  dato_rx = (dato_rx * 1.4222222222);
+  anges =0;
+  anges = (anges * 1.4222222222);
 
-  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+  while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
-       numero_pasos = numero_pasos + 1;
+       posicion_motor = posicion_motor + 1;
    }
    
-  while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+  while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
-        numero_pasos = numero_pasos -1;
+        posicion_motor = posicion_motor -1;
    }
 
 
@@ -82,16 +82,16 @@ if(Serial.available()>=1)
   arab.write(90);
   gar.write(0);
 
-    dato_rx =90;
-  dato_rx = (dato_rx * 1.4222222222);
+    anges =90;
+  anges = (anges * 1.4222222222);
 
-  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+  while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
-       numero_pasos = numero_pasos + 1;
+       posicion_motor = posicion_motor + 1;
    }
-   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+   while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
-        numero_pasos = numero_pasos -1;
+        posicion_motor = posicion_motor -1;
    }
   
 }else if(cmd == 'c'|| cmd == 'C'){
@@ -103,16 +103,16 @@ if(Serial.available()>=1)
   arab.write(110);
   gar.write(0);
 
-    dato_rx =180;
-  dato_rx = (dato_rx * 1.4222222222);
+    anges =180;
+  anges = (anges * 1.4222222222);
 
-  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+  while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
-       numero_pasos = numero_pasos + 1;
+       posicion_motor = posicion_motor + 1;
    }
-   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+   while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
-        numero_pasos = numero_pasos -1;
+        posicion_motor = posicion_motor -1;
    }
   
 }else if(cmd == 'd'|| cmd == 'D'){
@@ -124,16 +124,16 @@ if(Serial.available()>=1)
   arab.write(77);
   gar.write(0);
 
-    dato_rx = 270;
-  dato_rx = (dato_rx * 1.4222222222);
+    anges = 270;
+  anges = (anges * 1.4222222222);
 
-  while (dato_rx>numero_pasos){   // Girohacia la izquierda en grados
+  while (anges>posicion_motor){   // Girohacia la izquierda en grados
        paso_izq();
-       numero_pasos = numero_pasos + 1;
+       posicion_motor = posicion_motor + 1;
    }
-   while (dato_rx<numero_pasos){   // Giro hacia la derecha en grados
+   while (anges<posicion_motor){   // Giro hacia la derecha en grados
         paso_der();
-        numero_pasos = numero_pasos -1;
+        posicion_motor = posicion_motor -1;
    }
   
 }
