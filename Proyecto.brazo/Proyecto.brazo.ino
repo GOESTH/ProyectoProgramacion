@@ -58,7 +58,7 @@ if(Serial.available()>=1)
    
   adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
   arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
-  gar.write(0);//se escribe el numero de grados que se va a mover el servo 3.
+  gar.write(150);//se escribe el numero de grados que se va a mover el servo 3.
   
   anges =0;
   anges = (anges * 1.4222222222);
@@ -81,7 +81,7 @@ if(Serial.available()>=1)
    
   adat.write(50);
   arab.write(90);
-  gar.write(0);
+  gar.write(70);
 
   anges =90;
   anges = (anges * 1.4222222222);
@@ -102,7 +102,7 @@ if(Serial.available()>=1)
    
   adat.write(70);
   arab.write(110);
-  gar.write(0);
+  gar.write(150);
 
   anges =180;
   anges = (anges * 1.4222222222);
@@ -123,7 +123,7 @@ if(Serial.available()>=1)
    
   adat.write(90);
   arab.write(77);
-  gar.write(0);
+  gar.write(70);
 
   anges = 270;
   anges = (anges * 1.4222222222);
@@ -151,7 +151,7 @@ if(Serial.available()>=1)
     pot2 = map(pot2, 0, 1023, 0, 180);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro de cada servo motor.
     int pot3 = analogRead(2);// Lee el valor del potenciometro 1 del joystick, este valor entra por el pin analogico 0 (valor desde 0 a 1023)
     pot3 = map(pot3, 0, 1023, 0, 359);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro del motor paso a paso.
-    int pulsador = digitalRead(2);//lee el valor binario del pin digital 2, para asi salir del bucle cambiando el caracter de la variable cmd.
+    int pulsador = digitalRead(12);//lee el valor binario del pin digital 2, para asi salir del bucle cambiando el caracter de la variable cmd.
     
   adat.write(pot1);//se manda la orden al servo motor 1 para que se mueva segun el joystick.
   arab.write(pot2);//se manda la orden al servo motor 1 para que se mueva segun el joystick.
