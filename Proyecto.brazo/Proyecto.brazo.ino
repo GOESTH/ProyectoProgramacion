@@ -38,7 +38,7 @@ Serial.println("..............PUEDE ESCOGER ENTRE 3 POSICIONES DEL BRAZO........
 Serial.println("  POSICION a, SERVO 1: 27°, SERVO 2: 77°, garra: abierta, ROTACION: 0°");
 Serial.println("  POSICION b, SERVO 1: 50°, SERVO 2: 90°, garra: cerrada, ROTACION: 90°");
 Serial.println("  POSICION c, SERVO 1: 70°, SERVO 2: 110°, garra: abierta, ROTACION: 180°");
-Serial.println("  POSICION d, SERVO 1: 90°, SERVO 2: 77°, garra: abierta, ROTACION: 270°");
+Serial.println("  POSICION d, SERVO 1: 90°, SERVO 2: 77°, garra: cerrar, ROTACION: 270°");
 Serial.println("  POSICION e, EL BRAZO SE MUEVE SEGUN EL JOYSTICK");
 Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 85°, garra: cerrada, ROTACION: 0° !!! ");
 
@@ -133,7 +133,6 @@ if(Serial.available()>=1)
   gar.write(120);
 
 
-
   anges = 270;
   anges = (anges * 1.4222222222);
 
@@ -160,30 +159,18 @@ if(Serial.available()>=1)
     pot2 = map(pot2, 0, 1023, 0, 180);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro de cada servo motor.
     int pot3  = analogRead(2);
     int botgar = digitalRead(12);
-    /*
-    int pot3 = analogRead(2);// Lee el valor del potenciometro 1 del joystick, este valor entra por el pin analogico 0 (valor desde 0 a 1023)
-    pot3 = map(pot3, 0, 1023, 0, 359);// Se mapea el valor del potenciometro en una escala de 0 a 180 grados, rango de giro del motor paso a paso.
-    */
-    int pulsador = digitalRead(12);//lee el valor binario del pin digital 2, para asi salir del bucle cambiando el caracter de la variable cmd.
+    int pulsador = digitalRead(13);//lee el valor binario del pin digital 13, para asi salir del bucle cambiando el caracter de la variable cmd.
     
   adat.write(pot1);//se manda la orden al servo motor 1 para que se mueva segun el joystick.
   arab.write(pot2);//se manda la orden al servo motor 2 para que se mueva segun el joystick.
   
-   if (botgar == HIGH){
+  if (botgar == HIGH){  
 
+    gar.write(110);//se manda la orden al servo motor 3 para que se mueva segun un boton.
   
+  }else if (botgar == LOW){
 
-  gar.write(110);//se manda la orden al servo motor 3 para que se mueva segun un boton.
-  
-  delay(1000);
-  
-  
-}else if (botgar == LOW){
-  
-
-
-  gar.write(140);//se manda la orden al servo motor 3 para que se mueva segun un boton.
-  
+  gar.write(140);//se manda la orden al servo motor 3 para que se mueva segun un boton.  
  
   }
   
@@ -206,11 +193,9 @@ if(Serial.available()>=1)
    delay(15);
    
    }
-   }else
-  }
-
-  
-   }
+    }
+     }
+      }
   
 
 void paso_der(){// funcion_movimiento hacia la derecha del motor paso a paso.
