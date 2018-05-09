@@ -27,7 +27,7 @@ gar.attach(3);//el servo  3, llamdo "gar" se ubica en el pin digital(pwm)11.
 
 adat.write(24);
 arab.write(85);
-//gar.write(110);
+gar.write(110);
 
 Serial.println("    -SERVO 1, MUEVE LA GARRA ADELANTE Y ATRAS");
 Serial.println("    -SERVO 2, MUEVE LA GARRA ARRIBA Y ABAJO");
@@ -35,12 +35,12 @@ Serial.println("    -SERVO 2, ABRE Y CIERRA LA GARRA");
 Serial.println("    -ROTACION, HACE ROTAR EL BRAZO SOBRE SU PROPIO EJE 360°");
 Serial.println("-----------------------------------------------------------------------");
 Serial.println("..............PUEDE ESCOGER ENTRE 3 POSICIONES DEL BRAZO..............");
-Serial.println("  POSICION a, SERVO 1: 27°, SERVO 2: 77°, SERVO 3: 0°, ROTACION: 0°");
-Serial.println("  POSICION b, SERVO 1: 50°, SERVO 2: 90°, SERVO 3: 0°, ROTACION: 90°");
-Serial.println("  POSICION c, SERVO 1: 70°, SERVO 2: 110°, SERVO 3: 0°, ROTACION: 180°");
-Serial.println("  POSICION d, SERVO 1: 90°, SERVO 2: 77°, SERVO 3: 0°, ROTACION: 270°");
+Serial.println("  POSICION a, SERVO 1: 27°, SERVO 2: 77°, garra: abierta, ROTACION: 0°");
+Serial.println("  POSICION b, SERVO 1: 50°, SERVO 2: 90°, garra: cerrada, ROTACION: 90°");
+Serial.println("  POSICION c, SERVO 1: 70°, SERVO 2: 110°, garra: abierta, ROTACION: 180°");
+Serial.println("  POSICION d, SERVO 1: 90°, SERVO 2: 77°, garra: abierta, ROTACION: 270°");
 Serial.println("  POSICION e, EL BRAZO SE MUEVE SEGUN EL JOYSTICK");
-Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 85°, SERVO 3: 0°, ROTACION: 0° !!! ");
+Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 85°, garra: cerrada, ROTACION: 0° !!! ");
 
 
 }
@@ -57,18 +57,13 @@ if(Serial.available()>=1)
      
  if(cmd == 'a'|| cmd == 'A'){
   
-  digitalWrite(2, HIGH); //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
-  
    Serial.print("ud indico posicion:");
    Serial.println(cmd);
    
   adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
   arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
   gar.write(145);//se escribe el numero de grados que se va a mover el servo 3.
-  
-  delay(1000);
-  digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
-  
+
   anges =0;
   anges = (anges * 1.4222222222);
 
@@ -85,8 +80,6 @@ if(Serial.available()>=1)
 
  }else if(cmd == 'b'|| cmd == 'B'){
 
-   digitalWrite(2, HIGH);  //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
-
    Serial.print("ud indico posicion:");
    Serial.println(cmd);
    
@@ -94,8 +87,6 @@ if(Serial.available()>=1)
   arab.write(90);
   gar.write(120);
 
- delay(1000);
- digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
 
   anges =90;
   anges = (anges * 1.4222222222);
@@ -111,8 +102,6 @@ if(Serial.available()>=1)
   
 }else if(cmd == 'c'|| cmd == 'C'){
 
-  digitalWrite(2, HIGH);  //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
-
 
    Serial.print("ud indico posicion:");
    Serial.println(cmd);
@@ -121,8 +110,6 @@ if(Serial.available()>=1)
   arab.write(110);
   gar.write(145);
   
-  delay(1000);
-  digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
   anges =180;
   anges = (anges * 1.4222222222);
 
@@ -137,8 +124,6 @@ if(Serial.available()>=1)
   
 }else if(cmd == 'd'|| cmd == 'D'){
 
-   digitalWrite(2, HIGH);  //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
-
 
    Serial.print("ud indico posicion:");
    Serial.println(cmd);
@@ -147,8 +132,7 @@ if(Serial.available()>=1)
   arab.write(77);
   gar.write(120);
 
-  delay(1000);
-  digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
+
 
   anges = 270;
   anges = (anges * 1.4222222222);
@@ -187,23 +171,20 @@ if(Serial.available()>=1)
   
    if (botgar == HIGH){
 
-  digitalWrite(2, HIGH);  //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
+  
 
   gar.write(110);//se manda la orden al servo motor 3 para que se mueva segun un boton.
   
   delay(1000);
-  digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
   
   
 }else if (botgar == LOW){
   
-    digitalWrite(2, HIGH);  //SE ACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR RECIBA ENERGIA 5V Y CAMBIE DE POSICION
+
 
   gar.write(140);//se manda la orden al servo motor 3 para que se mueva segun un boton.
   
-  delay(1000);
-  digitalWrite(2, LOW);  //SE DESACTIVA EL PUERTO DIGITAL 2 PARA QUE EL MOTOR NO RECIBA ENERGIA 5V Y NO SE CALIENTE
-  
+ 
   }
   
     anges = pot3;
