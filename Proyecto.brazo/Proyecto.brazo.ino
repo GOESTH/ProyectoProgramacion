@@ -1,7 +1,7 @@
 
 
 
-#include <Servo.h>
+#include <Servo.h>//inclusion en el codigo de la libredria Servo.h para controlar mas facil los servos.
 
 Servo adat; //nombre de la variable que actua sobre el servo que mueve la garra adelante y atras.
 Servo arab;//nombre de la variable que actua sobre el servo que mueve la garra  servoarriba y abajo.
@@ -62,7 +62,7 @@ Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 
 
 void loop() {
    
-  numColor = readColor(); //guarda en la variable numColor el valor que arroja 
+  numColor = reconocerColor(); //se especifica de donde va a salir el valor de numColor, valor que se da con el retorno de la variable numColor al final de la funcion reconorColor
   delay(10); 
    
   switch (numColor) {
@@ -466,5 +466,5 @@ void apagado() {// funcion_apagado del motor paso a paso.
   if (V<58 & V>45 & A<40 &A>26){// se comprueba que segun la combinacion de frecuencias del verde y azul, el sensor este analizando un color azul.
     numColor = 6; 
   }
-  return numColor;  //devuelve el numero que tiene la variable numColor para asi ser evaluado en el switch.
+  return numColor;  //devuelve el numero que tiene la variable numColor para asi ser evaluado en el switch, en la funcion void loop.
 }
