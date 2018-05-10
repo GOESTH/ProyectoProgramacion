@@ -1,7 +1,7 @@
 
 
 
-#include <Servo.h>
+#include <Servo.h>//inclusion en el codigo de la libredria Servo.h para controlar mas facil los servos.
 
 Servo adat; //nombre de la variable que actua sobre el servo que mueve la garra adelante y atras.
 Servo arab;//nombre de la variable que actua sobre el servo que mueve la garra  servoarriba y abajo.
@@ -15,7 +15,7 @@ int numColor = 0;// codigo de color registrado, inicializado en 0
 
 void setup() {
   
-Serial.begin(9600);
+Serial.begin(9600);//creacion de la posibilidad de usar el monitor serial para la funcion de la interfaz de usuario.
 
   pinMode(4, OUTPUT);//pin S0 conectado al pin 4 del arduino
   pinMode(7, OUTPUT);//pin S1 conectado al pin 7 del arduino
@@ -32,16 +32,14 @@ Serial.begin(9600);
   pinMode(9, OUTPUT); // Pin 9 se conecta a al pin IN2 de la placa del motor paso a paso.
   pinMode(8, OUTPUT); // Pin 8 se conecta a al pin IN1 de la placa del motor paso a paso.
 
-digitalWrite(2, LOW); 
+  adat.attach(6);//el servo 1, llamado "adat" se ubica en el pin digital(pwm)9.
+  arab.attach(5);//el servo 2, llamado "arab" se ubica en el pin digital(pwm)10.
+  gar.attach(3);//el servo  3, llamdo "gar" se ubica en el pin digital(pwm)11.
 
-adat.attach(6);//el servo 1, llamado "adat" se ubica en el pin digital(pwm)9.
-arab.attach(5);//el servo 2, llamado "arab" se ubica en el pin digital(pwm)10.
-gar.attach(3);//el servo  3, llamdo "gar" se ubica en el pin digital(pwm)11.
-
-// se envia el angulo al que se quiere que se mueve el servo motor, para dar una posicion de inicio.
-adat.write(24);
-arab.write(85);
-gar.write(110);
+  // se envia el angulo al que se quiere que se mueve el servo motor, para dar una posicion de inicio.
+  adat.write(24);
+  arab.write(85);
+  gar.write(110);
 
 /*
 Serial.println("    -SERVO 1, MUEVE LA GARRA ADELANTE Y ATRAS");
@@ -62,7 +60,7 @@ Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 
 
 void loop() {
    
-  numColor = readColor(); //guarda en la variable numColor el valor que arroja 
+  numColor = reconocerColor(); //se especifica de donde va a salir el valor de numColor, valor que se da con el retorno de la variable numColor al final de la funcion reconorColor
   delay(10); 
    
   switch (numColor) {
@@ -466,5 +464,5 @@ void apagado() {// funcion_apagado del motor paso a paso.
   if (V<58 & V>45 & A<40 &A>26){// se comprueba que segun la combinacion de frecuencias del verde y azul, el sensor este analizando un color azul.
     numColor = 6; 
   }
-  return numColor;  //devuelve el numero que tiene la variable numColor para asi ser evaluado en el switch.
+  return numColor;  //devuelve el numero que tiene la variable numColor para asi ser evaluado en el switch, en la funcion void loop.
 }
