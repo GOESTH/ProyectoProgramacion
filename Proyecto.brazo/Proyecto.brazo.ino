@@ -3,15 +3,15 @@
 
 #include <Servo.h>
 
-Servo adat; //adelante y atras.
-Servo arab;//arriba y abajo.
-Servo gar;//garra.
+Servo adat; //nombre de la variable que actua sobre el servo que mueve la garra adelante y atras.
+Servo arab;//nombre de la variable que actua sobre el servo que mueve la garra  servoarriba y abajo.
+Servo gar;//nombre de la variable que actua sobre el servo que abre y cierra la garra.
 
 int velmo = 5;// Tiempo (milisegundos)que tarda en dar un paso el motor paso a paso.
 int anges = 0;// Angulo escogido por el caracter seleccionado.
-int posicion_motor = 0;// grado en el que esta el motor paso a paso
-int frequencia = 0;
-int numColor = 0;
+int posicion_motor = 0;// grado en el que esta el motor paso a paso..
+int frequencia = 0;// frecuencia de incio = 0.
+int numColor = 0;// codigo de color registrado, inicializado en 0
 
 void setup() {
   
@@ -38,6 +38,7 @@ adat.attach(6);//el servo 1, llamado "adat" se ubica en el pin digital(pwm)9.
 arab.attach(5);//el servo 2, llamado "arab" se ubica en el pin digital(pwm)10.
 gar.attach(3);//el servo  3, llamdo "gar" se ubica en el pin digital(pwm)11.
 
+// se envia el angulo al que se quiere que se mueve el servo motor, para dar una posicion de inicio.
 adat.write(24);
 arab.write(85);
 gar.write(110);
@@ -60,12 +61,13 @@ Serial.println("  POR DEFECTO SE INICIA EN LA POSICION, SERVO 1: 24°, SERVO 2: 
 }
 
 void loop() {
-  
-numColor = readColor();
-  delay(10);  
+   
+  numColor = readColor(); //guarda en la variable numColor el valor que arroja 
+  delay(10); 
+   
   switch (numColor) {
-    case 1:
     
+    case 1:    
     adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
     arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
     gar.write(145);//se escribe el numero de grados que se va a mover el servo 3.
@@ -88,8 +90,7 @@ numColor = readColor();
     gar.write(120);
     
     break;
-    case 2:
-    
+    case 2:    
     adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
     arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
     gar.write(145);//se escribe el numero de grados que se va a mover el servo 3.
@@ -113,8 +114,7 @@ numColor = readColor();
     gar.write(120);
     
     break;
-    case 3:
-    
+    case 3:    
     adat.write(27);//se escribe el numero de grados que se va a mover el servo 1.
     arab.write(77);//se escribe el numero de grados que se va a mover el servo 2.
     gar.write(145);//se escribe el numero de grados que se va a mover el servo 3.
